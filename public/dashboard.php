@@ -42,16 +42,20 @@ $avaliacoes_apresentacao = getAvaliacaoApresentacao($pdo);
 
     <div class="container-fluid mt-4">
         <h1>Resultados da Pesquisa de Satisfação</h1>
+        <br>
+        <br>
 
         <div class="row">
             <div class="col-md-6">
+                <h4>Avaliação da Aplicação</h4>
                 <div class="chart-container">
                     <canvas id="barChartAplicacao"></canvas>
                 </div>
             </div>
             <div class="col-md-6">
+                <h4>Avaliação da Apresentação</h4>
                 <div class="chart-container">
-                    <canvas id="barChartApresentacao" ></canvas>
+                    <canvas id="barChartApresentacao"></canvas>
                 </div>
             </div>
         </div>
@@ -70,67 +74,67 @@ $avaliacoes_apresentacao = getAvaliacaoApresentacao($pdo);
         <input type="hidden" id="data-apresentacao-ruim" value="<?php echo $avaliacoes_apresentacao['ruim']; ?>">
         <input type="hidden" id="data-apresentacao-muito-ruim" value="<?php echo $avaliacoes_apresentacao['muito_ruim']; ?>">
 
-
-    <table class="table table-bordered mt-3">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Avaliação da Aplicação</th>
-                <th>Avaliação da Apresentação</th>
-                <th>Comentários Adicionais</th>
-                <th>Data de Envio</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($currentResults as $result): ?>
+        <h3>Tabela Respostas dos Formularios</h3>
+        <table class="table table-bordered mt-3">
+            <thead>
                 <tr>
-                    <td><?php echo htmlspecialchars($result['id']); ?></td>
-                    <td><?php
-                        if ($result['avaliacao_servico'] == 1) {
-                            echo nl2br(htmlspecialchars("😡\nMuito Insatisfeito"));
-                        } elseif ($result['avaliacao_servico'] == 2) {
-                            echo nl2br(htmlspecialchars("😠\nInsatisfeito"));
-                        } elseif ($result['avaliacao_servico'] == 3) {
-                            echo nl2br(htmlspecialchars("😐\nNeutro"));
-                        } elseif ($result['avaliacao_servico'] == 4) {
-                            echo nl2br(htmlspecialchars("😊\nSatisfeito"));
-                        } elseif ($result['avaliacao_servico'] == 5) {
-                            echo nl2br(htmlspecialchars("😍\nMuito Satisfeito"));
-                        } else {
-                            echo htmlspecialchars("Não foi possivel recuperar essa avaliação");
-                        }
-                        ?>
-                    </td>
-                    <td><?php echo htmlspecialchars($result['atendimento']); ?></td>
-                    <td><?php echo htmlspecialchars($result['comentarios_adicionais']); ?></td>
-                    <td><?php
-                        //$dataEnvio = $result['data_envio'];
-                        $date = new DateTime($result['data_envio']);
-                        $formattedDate = $date->format('d/m/Y \à\s H:i');
-                        echo htmlspecialchars($formattedDate);
-                        ?>
-                    </td>
+                    <th>ID</th>
+                    <th>Avaliação da Aplicação</th>
+                    <th>Avaliação da Apresentação</th>
+                    <th>Comentários Adicionais</th>
+                    <th>Data de Envio</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach ($currentResults as $result): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($result['id']); ?></td>
+                        <td><?php
+                            if ($result['avaliacao_servico'] == 1) {
+                                echo nl2br(htmlspecialchars("😡\nMuito Insatisfeito"));
+                            } elseif ($result['avaliacao_servico'] == 2) {
+                                echo nl2br(htmlspecialchars("😠\nInsatisfeito"));
+                            } elseif ($result['avaliacao_servico'] == 3) {
+                                echo nl2br(htmlspecialchars("😐\nNeutro"));
+                            } elseif ($result['avaliacao_servico'] == 4) {
+                                echo nl2br(htmlspecialchars("😊\nSatisfeito"));
+                            } elseif ($result['avaliacao_servico'] == 5) {
+                                echo nl2br(htmlspecialchars("😍\nMuito Satisfeito"));
+                            } else {
+                                echo htmlspecialchars("Não foi possivel recuperar essa avaliação");
+                            }
+                            ?>
+                        </td>
+                        <td><?php echo htmlspecialchars($result['atendimento']); ?></td>
+                        <td><?php echo htmlspecialchars($result['comentarios_adicionais']); ?></td>
+                        <td><?php
+                            //$dataEnvio = $result['data_envio'];
+                            $date = new DateTime($result['data_envio']);
+                            $formattedDate = $date->format('d/m/Y \à\s H:i');
+                            echo htmlspecialchars($formattedDate);
+                            ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
 
-    <!-- Paginação -->
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center mt-4">
-            <li class="page-item <?php if ($currentPage <= 1) echo 'disabled'; ?>">
-                <a class="page-link" href="?page=<?php echo max($currentPage - 1, 1); ?>">Anterior</a>
-            </li>
-            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <li class="page-item <?php if ($i == $currentPage) echo 'active'; ?>">
-                    <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+        <!-- Paginação -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center mt-4">
+                <li class="page-item <?php if ($currentPage <= 1) echo 'disabled'; ?>">
+                    <a class="page-link" href="?page=<?php echo max($currentPage - 1, 1); ?>">Anterior</a>
                 </li>
-            <?php endfor; ?>
-            <li class="page-item <?php if ($currentPage >= $totalPages) echo 'disabled'; ?>">
-                <a class="page-link" href="?page=<?php echo min($currentPage + 1, $totalPages); ?>">Próximo</a>
-            </li>
-        </ul>
-    </nav>
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <li class="page-item <?php if ($i == $currentPage) echo 'active'; ?>">
+                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                    </li>
+                <?php endfor; ?>
+                <li class="page-item <?php if ($currentPage >= $totalPages) echo 'disabled'; ?>">
+                    <a class="page-link" href="?page=<?php echo min($currentPage + 1, $totalPages); ?>">Próximo</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
