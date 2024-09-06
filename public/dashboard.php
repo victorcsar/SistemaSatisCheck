@@ -42,8 +42,8 @@ $currentResults = getSurveyResults($pdo, $start, $resultsPerPage);
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Avaliação do Serviço</th>
-                    <th>Atendimento</th>
+                    <th>Avaliação da Aplicação</th>
+                    <th>Avaliação da Apresentação</th>
                     <th>Comentários Adicionais</th>
                     <th>Data de Envio</th>
                 </tr>

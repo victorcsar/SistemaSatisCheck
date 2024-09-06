@@ -6,13 +6,13 @@ document.getElementById('survey-form').addEventListener('submit', function(event
     
     // Verifica se a primeira pergunta (question1) foi respondida
     if (!data.question1) {
-        showMessage('Por favor, selecione uma avaliação.', 'danger');
+        showMessage('Por favor, selecione um emoji.', 'danger');
         return;
     }
 
     // Verifica se a segunda pergunta (question2) foi respondida
     if (!data.question2) {
-        showMessage('Por favor, selecione uma opção de atendimento.', 'danger');
+        showMessage('Por favor, selecione uma opção para avaliar nossa apresentação.', 'danger');
         return;
     }
 
