@@ -47,7 +47,15 @@ try {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
         return $result;
-    }    
+    }
+
+    function getTotalRespostas($pdo) {
+        $query = 'SELECT COUNT(*) AS total_respostas FROM respostas_pesquisa';
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total_respostas'];
+    }
     
 
 }catch(\Exception $e){

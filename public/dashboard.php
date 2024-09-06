@@ -17,6 +17,7 @@ $currentResults = getSurveyResults($pdo, $start, $resultsPerPage);
 
 $avaliacoes_aplicacao = getAvaliacaoAplicacao($pdo);
 $avaliacoes_apresentacao = getAvaliacaoApresentacao($pdo);
+$totalRespostas = getTotalRespostas($pdo);
 
 ?>
 
@@ -43,6 +44,10 @@ $avaliacoes_apresentacao = getAvaliacaoApresentacao($pdo);
     <div class="container-fluid mt-4">
         <h1>Resultados da Pesquisa de Satisfação</h1>
         <br>
+        <br>
+
+        <h3>Total de respostas: <b> <?php echo $totalRespostas?></b></h3>
+
         <br>
 
         <div class="row">
