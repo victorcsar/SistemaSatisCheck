@@ -5,12 +5,30 @@ body {
     padding: 0;
 }
 
-.container-fluid{
+.container-fluid {
     margin: 50px auto;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
+}
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    max-height: 500px; /* Altura máxima para o gráfico */
+    margin-bottom: 100px; /* Espaço abaixo dos gráficos */
+}
+
+canvas {
+    width: 100% !important; /* Garante que o canvas preencha o contêiner */
+    height: 100% !important; /* Garante que o canvas preencha o contêiner */
+}
+
+@media (max-width: 767.98px) {
+    .chart-container {
+        height: auto; /* Ajuste a altura em telas menores se necessário */
+    }
 }
 
 .table {
@@ -19,7 +37,8 @@ body {
     margin-top: 20px;
 }
 
-.table th, .table td {
+.table th,
+.table td {
     border: 1px solid #ddd;
     padding: 8px;
 }

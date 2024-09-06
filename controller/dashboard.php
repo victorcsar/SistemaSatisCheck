@@ -18,6 +18,38 @@ try {
         return $stmt->fetchColumn();
     }
 
+    function getAvaliacaoAplicacao($pdo) {
+        $query = "SELECT 
+                    SUM(CASE WHEN avaliacao_servico = 1 THEN 1 ELSE 0 END) AS muito_insatisfeito,
+                    SUM(CASE WHEN avaliacao_servico = 2 THEN 1 ELSE 0 END) AS insatisfeito,
+                    SUM(CASE WHEN avaliacao_servico = 3 THEN 1 ELSE 0 END) AS neutro,
+                    SUM(CASE WHEN avaliacao_servico = 4 THEN 1 ELSE 0 END) AS satisfeito,
+                    SUM(CASE WHEN avaliacao_servico = 5 THEN 1 ELSE 0 END) AS muito_satisfeito
+                  FROM respostas_pesquisa";
+    
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        return $result;
+    }
+
+    function getAvaliacaoApresentacao($pdo) {
+        $query = "SELECT 
+                    SUM(CASE WHEN atendimento = 'excelente' THEN 1 ELSE 0 END) AS excelente,
+                    SUM(CASE WHEN atendimento = 'bom' THEN 1 ELSE 0 END) AS bom,
+                    SUM(CASE WHEN atendimento = 'razoavel' THEN 1 ELSE 0 END) AS razoavel,
+                    SUM(CASE WHEN atendimento = 'ruim' THEN 1 ELSE 0 END) AS ruim,
+                    SUM(CASE WHEN atendimento = 'muito_ruim' THEN 1 ELSE 0 END) AS muito_ruim
+                  FROM respostas_pesquisa";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        return $result;
+    }    
+    
+
 }catch(\Exception $e){
     // Capture a exceção e redirecione para a página de erro
     error_log($e->getMessage(), 3, '../logs/error.log'); // Exemplo de log em arquivo
